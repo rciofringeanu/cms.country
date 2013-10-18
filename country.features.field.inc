@@ -942,7 +942,7 @@ function country_field_default_fields() {
             'view_mode' => 'full',
           ),
           'type' => 'field_collection_view',
-          'weight' => 14,
+          'weight' => '10',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -963,7 +963,7 @@ function country_field_default_fields() {
         'module' => 'field_collection',
         'settings' => array(),
         'type' => 'field_collection_embed',
-        'weight' => '15',
+        'weight' => '11',
       ),
     ),
   );
@@ -1004,7 +1004,7 @@ function country_field_default_fields() {
             'view_mode' => 'full',
           ),
           'type' => 'field_collection_view',
-          'weight' => 15,
+          'weight' => '11',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1025,7 +1025,7 @@ function country_field_default_fields() {
         'module' => 'field_collection',
         'settings' => array(),
         'type' => 'field_collection_embed',
-        'weight' => '16',
+        'weight' => '12',
       ),
     ),
   );
@@ -1047,15 +1047,15 @@ function country_field_default_fields() {
         'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
-          'hour' => 'hour',
+          'hour' => 0,
           'minute' => 0,
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
         ),
-        'timezone_db' => 'UTC',
+        'timezone_db' => '',
         'todate' => '',
-        'tz_handling' => 'site',
+        'tz_handling' => 'none',
       ),
       'translatable' => '0',
       'type' => 'datetime',
@@ -1076,7 +1076,7 @@ function country_field_default_fields() {
             'multiple_to' => '',
           ),
           'type' => 'date_default',
-          'weight' => 13,
+          'weight' => '9',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1108,7 +1108,7 @@ function country_field_default_fields() {
           'year_range' => '1970:+0',
         ),
         'type' => 'date_popup',
-        'weight' => '14',
+        'weight' => '10',
       ),
     ),
   );
@@ -1130,15 +1130,15 @@ function country_field_default_fields() {
         'cache_enabled' => 0,
         'granularity' => array(
           'day' => 'day',
-          'hour' => 'hour',
+          'hour' => 0,
           'minute' => 0,
           'month' => 'month',
           'second' => 0,
           'year' => 'year',
         ),
-        'timezone_db' => 'UTC',
+        'timezone_db' => '',
         'todate' => '',
-        'tz_handling' => 'site',
+        'tz_handling' => 'none',
       ),
       'translatable' => '0',
       'type' => 'datetime',
@@ -1159,7 +1159,7 @@ function country_field_default_fields() {
             'multiple_to' => '',
           ),
           'type' => 'date_default',
-          'weight' => 12,
+          'weight' => '8',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1191,7 +1191,7 @@ function country_field_default_fields() {
           'year_range' => '1970:+0',
         ),
         'type' => 'date_popup',
-        'weight' => '13',
+        'weight' => '9',
       ),
     ),
   );
@@ -1270,7 +1270,7 @@ function country_field_default_fields() {
           'year_range' => '-3:+3',
         ),
         'type' => 'date_popup',
-        'weight' => '6',
+        'weight' => '5',
       ),
     ),
   );
@@ -1312,7 +1312,7 @@ function country_field_default_fields() {
             'view_mode' => 'full',
           ),
           'type' => 'field_collection_table_view',
-          'weight' => '10',
+          'weight' => '6',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1333,7 +1333,7 @@ function country_field_default_fields() {
         'module' => 'field_collection',
         'settings' => array(),
         'type' => 'field_collection_embed',
-        'weight' => '11',
+        'weight' => '7',
       ),
     ),
   );
@@ -1523,7 +1523,7 @@ function country_field_default_fields() {
           'module' => 'list',
           'settings' => array(),
           'type' => 'list_default',
-          'weight' => 11,
+          'weight' => '7',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1546,7 +1546,7 @@ function country_field_default_fields() {
           'display_label' => 1,
         ),
         'type' => 'options_onoff',
-        'weight' => '12',
+        'weight' => '8',
       ),
     ),
   );
@@ -1721,7 +1721,7 @@ function country_field_default_fields() {
       'settings' => array(
         'allowed_values' => array(
           0 => array(
-            'vocabulary' => 'geopolitical_region',
+            'vocabulary' => 'region',
             'parent' => '0',
           ),
         ),
@@ -1736,11 +1736,11 @@ function country_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'inline',
+          'label' => 'above',
           'module' => 'cms',
           'settings' => array(
-            'render_plain_text' => 1,
-            'render_tr' => 1,
+            'render_plain_text' => '1',
+            'render_tr' => TRUE,
           ),
           'type' => 'cms_term_reference_field_table_row_formatter',
           'weight' => '3',
@@ -1764,7 +1764,7 @@ function country_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '5',
+        'weight' => '14',
       ),
     ),
   );
@@ -1805,7 +1805,7 @@ function country_field_default_fields() {
             'view_mode' => 'full',
           ),
           'type' => 'field_collection_view',
-          'weight' => 16,
+          'weight' => '12',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1826,7 +1826,7 @@ function country_field_default_fields() {
         'module' => 'field_collection',
         'settings' => array(),
         'type' => 'field_collection_embed',
-        'weight' => '17',
+        'weight' => '13',
       ),
     ),
   );

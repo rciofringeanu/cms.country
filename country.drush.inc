@@ -22,6 +22,12 @@ function country_drush_command() {
             'source' => 'Optional. Alternative source file to load the data from. If missing, loads from the default file(s)'
         ),
     );
+    $items['country_update_regions'] = array(
+        'description' => 'Update region field after remake field_country_region to point to "region" vocabulary',
+        'options' => array(
+            'source' => 'Optional. Alternative source file to load the data from. If missing, loads from the default file(s)'
+        ),
+    );
 
     return $items;
 }
@@ -83,5 +89,31 @@ function drush_country_import_countries_details($source_file = 'countries.json')
 
     foreach ($data as $country) {
         Country::node_from_array($country);
+        CMSUtils::println("Imported country " . $country['title']);
+    }
+}
+function drush_country_update_regions($source_file = 'countries.json') {
+    $current_profile = CMSUtils::get_current_profile();
+    $source_dir = drupal_realpath(drupal_get_path('module', 'cms_initial_data')) . DIRECTORY_SEPARATOR . $current_profile;
+
+    if(!empty($source_dir) && !CMSUtils::is_valid_dir($source_dir)) {
+        CMSUtils::println('Invalid source directory specified %s', $source_dir);
+        return;
+    }
+
+    $file_path = $source_dir . DIRECTORY_SEPARATOR . $source_file;
+
+    CMSUtils::println('Importing countries from %s', $file_path);
+    $data = CMSUtils::read_json($file_path, TRUE);
+    CMSUtils::println('Found %s countries', count($data));
+
+    foreach ($data as $country) {
+        $country_node = entity_uuid_load("node", array($country['uuid']));
+        $country_node = current($country_node);
+        $country_node = node_load($country_node->nid);
+
+        CMSBase::set_field_taxonomic_term($country_node, 'field_country_region', VOC_REGION, $country);
+        node_save($country_node);
+        CMSUtils::println("Updated country " . $country['title']);
     }
 }

@@ -83,6 +83,9 @@ function country_strongarm() {
       'diff_standard' => array(
         'custom_settings' => FALSE,
       ),
+      'token' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -99,7 +102,19 @@ function country_strongarm() {
         ),
         'projects' => array(
           'default' => array(
-            'weight' => '100',
+            'weight' => '15',
+            'visible' => TRUE,
+          ),
+        ),
+        'meetings' => array(
+          'default' => array(
+            'weight' => '14',
+            'visible' => TRUE,
+          ),
+        ),
+        'species' => array(
+          'default' => array(
+            'weight' => '13',
             'visible' => TRUE,
           ),
         ),

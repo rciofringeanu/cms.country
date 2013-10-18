@@ -48,3 +48,39 @@ function country_install() {
         watchdog('country', "Unable to load role name '@role'", array("@role" => ROLE_MANAGE_PARTY), WATCHDOG_WARNING);
     }
 }
+
+/**
+ * Update Countries' statuses
+*/
+function country_update_7001() {
+    if (CMSUtils::get_current_profile() != 'aewa') {
+        return t('Update script available only for AEWA instance.');
+    }
+
+    $countries = node_load_multiple(array(), array('type' => 'country'));
+    foreach($countries as $node) {
+        if (!empty($node->field_country_instrument_status[$node->language])) {
+            foreach($node->field_country_instrument_status[$node->language] as $row) {
+                $field_collection = entity_load('field_collection_item', array($row['value']));
+                reset($field_collection);
+                $field_collection = current($field_collection);
+                $tid = $field_collection->field_country_status[$node->language][0]['tid'];
+                $term = Country::get_field_taxonomic_term_name($field_collection, 'field_country_status', VOC_PARTY_STATUS);
+
+                if ($term == '(x)') {
+                    $new_term_data['field_country_status'] = 'Signed but not ratified';
+                    Country::set_field_taxonomic_term($field_collection, 'field_country_status', VOC_PARTY_STATUS, $new_term_data);
+                    $field_collection->save();
+                }
+
+                if ($term == 'X') {
+                    $new_term_data['field_country_status'] = 'Contracting Party';
+                    Country::set_field_taxonomic_term($field_collection, 'field_country_status', VOC_PARTY_STATUS, $new_term_data);
+                    $field_collection->save();
+                }
+            }
+        }
+    }
+
+    return t("Countries' statuses successfully updated.");
+}

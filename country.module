@@ -7,6 +7,7 @@
 include_once 'country.features.inc';
 
 define('VOC_GEOPOLITICAL_REGION', 'geopolitical_region');
+//define('VOC_GEOPOLITICAL_REGION', 'region');
 
 define('ROLE_MANAGE_PARTY', 'manage party');
 define('VOC_PARTY_STATUS', 'party_status');
@@ -33,7 +34,6 @@ function country_views_default_views_alter(&$views) {
 function country_form_alter(&$form, &$form_state, $form_id) {
     switch ($form_id) {
         case 'country_node_form' :
-            hide($form['additional_settings']);
 
             $breadcrumb = array();
             $breadcrumb[] = l(t('Home'), '<front>');
@@ -282,7 +282,10 @@ class Country extends CMSBase {
         self::set_field_single_value($node, 'field_country_iso2', $data);
         self::set_field_single_value($node, 'field_country_iso3', $data);
         self::set_field_single_value($node, 'field_country_party_number', $data);
-        self::set_field_taxonomic_term($node, 'field_country_region', VOC_REGION, $data);
+
+        $data['field_country_region'] = ucwords(strtolower($data['field_country_region']));
+        self::set_field_taxonomic_term($node, 'field_country_region', VOC_GEOPOLITICAL_REGION, $data);
+
         self::set_field_single_value($node, 'field_country_entry_into_force', $data);
         self::set_instrument_status($node, $data);
         self::set_field_boolean($node, 'field_country_member_to_stc', $data);
@@ -335,7 +338,7 @@ class Country extends CMSBase {
                 $c['field_country_ac_year'][$node->language][0]['value'] = $value['field_country_ac_year'];
                 $c['field_country_ac_value'][$node->language][0]['value'] = $value['field_country_ac_value'];
                 $term = CMSUtils::vocabulary_get_or_create_term($value['field_country_ac_currency'], VOC_CURRENCY);
-                $c['field_country_ac_currency'][$node->language][0]['value'] = $term['tid'];
+                $c['field_country_ac_currency'][$node->language][0]['tid'] = $term->tid;
 
                 $entity = entity_create('field_collection_item', $c);
                 $entity->setHostEntity('node', $node);
@@ -351,7 +354,7 @@ class Country extends CMSBase {
                 $c['field_country_arrears_year'][$node->language][0]['value'] = $value['field_country_arrears_year'];
                 $c['field_country_arrears_value'][$node->language][0]['value'] = $value['field_country_arrears_value'];
                 $term = CMSUtils::vocabulary_get_or_create_term($value['field_country_arrears_currency'], VOC_CURRENCY);
-                $c['field_country_arrears_currency'][$node->language][0]['value'] = $term['tid'];
+                $c['field_country_arrears_currency'][$node->language][0]['tid'] = $term->tid;
 
                 $entity = entity_create('field_collection_item', $c);
                 $entity->setHostEntity('node', $node);
@@ -364,10 +367,10 @@ class Country extends CMSBase {
             foreach ($data['field_country_voluntary_contrib'] as $index => $value) {
                 $c = array();
                 $c['field_name'] = 'field_country_voluntary_contrib';
-                $c['field_country_vc_year'][$node->language][0]['value'] = $value['field_country_field_country_voluntary_contrib_year'];
+                $c['field_country_vc_year'][$node->language][0]['value'] = $value['field_country_vc_year'];
                 $c['field_country_vc_value'][$node->language][0]['value'] = $value['field_country_vc_value'];
                 $term = CMSUtils::vocabulary_get_or_create_term($value['field_country_vc_currency'], VOC_CURRENCY);
-                $c['field_country_vc_currency'][$node->language][0]['value'] = $term['tid'];
+                $c['field_country_vc_currency'][$node->language][0]['tid'] = $term->tid;
 
                 $entity = entity_create('field_collection_item', $c);
                 $entity->setHostEntity('node', $node);
@@ -392,7 +395,7 @@ class Country extends CMSBase {
         self::get_field_single_value($node, 'field_country_iso2', $ret);
         self::get_field_single_value($node, 'field_country_iso3', $ret);
         self::get_field_single_value($node, 'field_country_party_number', $ret);
-        $ret['field_country_region'] = self::get_field_taxonomic_term_name($node, 'field_country_region', VOC_REGION);
+        $ret['field_country_region'] = self::get_field_taxonomic_term_name($node, 'field_country_region', VOC_GEOPOLITICAL_REGION);
         self::get_field_single_value($node, 'field_country_entry_into_force', $ret);
         self::get_field_boolean($node, 'field_country_member_to_stc', $ret);
         self::get_field_single_value($node, 'field_country_date_of_accession', $ret);

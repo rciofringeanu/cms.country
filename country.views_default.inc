@@ -278,10 +278,41 @@ function country_views_default_views() {
   $handler->display->display_options['filters']['field_country_status_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_country_status_tid']['vocabulary'] = 'party_status';
   $handler->display->display_options['filters']['field_country_status_tid']['error_message'] = 0;
+  /* Filter criterion: Content: Region (field_country_region) */
+  $handler->display->display_options['filters']['field_country_region_tid']['id'] = 'field_country_region_tid';
+  $handler->display->display_options['filters']['field_country_region_tid']['table'] = 'field_data_field_country_region';
+  $handler->display->display_options['filters']['field_country_region_tid']['field'] = 'field_country_region_tid';
+  $handler->display->display_options['filters']['field_country_region_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_country_region_tid']['expose']['operator_id'] = 'field_country_region_tid_op';
+  $handler->display->display_options['filters']['field_country_region_tid']['expose']['label'] = 'Region';
+  $handler->display->display_options['filters']['field_country_region_tid']['expose']['operator'] = 'field_country_region_tid_op';
+  $handler->display->display_options['filters']['field_country_region_tid']['expose']['identifier'] = 'field_country_region_tid';
+  $handler->display->display_options['filters']['field_country_region_tid']['expose']['reduce'] = 0;
+  $handler->display->display_options['filters']['field_country_region_tid']['reduce_duplicates'] = 0;
+  $handler->display->display_options['filters']['field_country_region_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_country_region_tid']['vocabulary'] = 'region';
+  $handler->display->display_options['filters']['field_country_region_tid']['error_message'] = 1;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['path'] = 'country/listing';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'country_export');
+  $handler->display->display_options['defaults']['query'] = FALSE;
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_xls';
+  $handler->display->display_options['style_options']['provide_file'] = 1;
+  $handler->display->display_options['style_options']['filename'] = 'Countries - %timestamp-yyyy%timestamp-mm%timestamp-dd.xls';
+  $handler->display->display_options['style_options']['parent_sort'] = 1;
+  $handler->display->display_options['path'] = 'country/export';
+
+
+
   $translatables['view_countries'] = array(
     t('Master'),
     t('View all countries'),
@@ -303,7 +334,9 @@ function country_views_default_views() {
     t('Party number'),
     t('CMS Instrument'),
     t('Status'),
+    t('Region (field_country_region)'),
     t('Page'),
+    t('Data export'),
   );
   $export['view_countries'] = $view;
 
