@@ -8,9 +8,13 @@ include_once 'country.features.inc';
 
 define('VOC_GEOPOLITICAL_REGION', 'geopolitical_region');
 //define('VOC_GEOPOLITICAL_REGION', 'region');
+if (!defined('ROLE_MANAGE_PARTY')) {
+    define('ROLE_MANAGE_PARTY', 'manage party');
+}
 
-define('ROLE_MANAGE_PARTY', 'manage party');
-define('VOC_PARTY_STATUS', 'party_status');
+if (!defined('VOC_PARTY_STATUS')) {
+    define('VOC_PARTY_STATUS', 'party_status');
+}
 
 module_load_include('module', 'cms');
 
