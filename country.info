@@ -6,8 +6,6 @@ php = 5.2.4
 version = 7.x-2.3-alpha1
 project = country
 
-dependencies[] = cms
-
 dependencies[] = ctools
 dependencies[] = date
 dependencies[] = features
