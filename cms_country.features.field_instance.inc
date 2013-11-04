@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * country.features.field_instance.inc
+ * cms_country.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function country_field_default_field_instances() {
+function cms_country_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance: 'field_collection_item-field_country_anual_contribution-field_country_ac_currency'

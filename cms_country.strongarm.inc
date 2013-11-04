@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * country.strongarm.inc
+ * cms_country.strongarm.inc
  */
 
 /**
  * Implements hook_strongarm().
  */
-function country_strongarm() {
+function cms_country_strongarm() {
   $export = array();
 
   $strongarm = new stdClass();

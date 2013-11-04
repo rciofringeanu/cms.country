@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * country.features.inc
+ * cms_country.features.inc
  */
 
 /**
  * Implements hook_ctools_plugin_api().
  */
-function country_ctools_plugin_api($module = NULL, $api = NULL) {
+function cms_country_ctools_plugin_api($module = NULL, $api = NULL) {
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
   }
@@ -16,14 +16,14 @@ function country_ctools_plugin_api($module = NULL, $api = NULL) {
 /**
  * Implements hook_views_api().
  */
-function country_views_api($module = NULL, $api = NULL) {
+function cms_country_views_api($module = NULL, $api = NULL) {
   return array("api" => "3.0");
 }
 
 /**
  * Implements hook_node_info().
  */
-function country_node_info() {
+function cms_country_node_info() {
   $items = array(
     'country' => array(
       'name' => t('Country'),

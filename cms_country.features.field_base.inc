@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * country.features.field_base.inc
+ * cms_country.features.field_base.inc
  */
 
 /**
  * Implements hook_field_default_field_bases().
  */
-function country_field_default_field_bases() {
+function cms_country_field_default_field_bases() {
   $field_bases = array();
 
   // Exported field_base: 'field_country_ac_currency'

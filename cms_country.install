@@ -4,7 +4,7 @@
  * Implements hook_uninstall()
  * @todo Test this code
  */
-function country_uninstall() {
+function cms_country_uninstall() {
     user_role_delete(ROLE_MANAGE_PARTY);
     CMSUtils::vocabulary_delete(VOC_GEOPOLITICAL_REGION);
 
@@ -19,7 +19,7 @@ function country_uninstall() {
 /**
  * Implements hook_install()
  */
-function country_install() {
+function cms_country_install() {
     $role = CMSUtils::get_or_create_role(ROLE_MANAGE_PARTY);
 
     CMSUtils::vocabulary_create('Geopolitical regions', VOC_GEOPOLITICAL_REGION);
@@ -52,7 +52,7 @@ function country_install() {
 /**
  * Update Countries' statuses
 */
-function country_update_7001() {
+function cms_country_update_7001() {
     if (CMSUtils::get_current_profile() != 'aewa') {
         return t('Update script available only for AEWA instance.');
     }

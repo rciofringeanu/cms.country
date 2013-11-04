@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * country.features.field.inc
+ * cms_country.features.field.inc
  */
 
 /**
  * Implements hook_field_default_fields().
  */
-function country_field_default_fields() {
+function cms_country_field_default_fields() {
   $fields = array();
 
   // Exported field: 'field_collection_item-field_country_anual_contribution-field_country_ac_currency'.

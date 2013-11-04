@@ -1,8 +1,8 @@
 <?php
 
-function country_drush_command() {
+function cms_country_drush_command() {
     $items['import_countries'] = array(
-        'description' => 'Import official list of countries provided by this module in country.json file',
+        'description' => 'Import official list of countries provided by this module in cms_country.json file',
         'examples' => array(
             'drush import_default_countries' => 'Import countries into the Drupal instance'
         )
