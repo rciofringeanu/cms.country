@@ -32,7 +32,7 @@ function cms_country_drush_command() {
     return $items;
 }
 
-function drush_country_import_countries() {
+function drush_cms_country_import_countries() {
     Country::import_default_countries();
 }
 
@@ -41,7 +41,7 @@ function drush_country_import_countries() {
  *
  * @param   string   $destination_dir
 */
-function drush_country_export_countries($destination_dir = '') {
+function drush_cms_country_export_countries($destination_dir = '') {
     if (!CMSUtils::is_valid_dir($destination_dir, TRUE)) {
         CMSUtils::println('Invalid export directory %s. Please provide a valid export directory', $destination_dir);
         return;
@@ -72,7 +72,7 @@ function drush_country_export_countries($destination_dir = '') {
     fclose($handler);
 }
 
-function drush_country_import_countries_details($source_file = 'countries.json') {
+function drush_cms_country_import_countries_details($source_file = 'countries.json') {
     $current_profile = CMSUtils::get_current_profile();
     $source_dir = drupal_realpath(drupal_get_path('module', 'cms_initial_data')) . DIRECTORY_SEPARATOR . $current_profile;
 
@@ -92,7 +92,7 @@ function drush_country_import_countries_details($source_file = 'countries.json')
         CMSUtils::println("Imported country " . $country['title']);
     }
 }
-function drush_country_update_regions($source_file = 'countries.json') {
+function drush_cms_country_update_regions($source_file = 'countries.json') {
     $current_profile = CMSUtils::get_current_profile();
     $source_dir = drupal_realpath(drupal_get_path('module', 'cms_initial_data')) . DIRECTORY_SEPARATOR . $current_profile;
 
