@@ -35,6 +35,9 @@ function cms_country_views_default_views_alter(&$views) {
     return $views;
 }
 
+/**
+ *  Implements hook_form_alter();
+ */
 function cms_country_form_alter(&$form, &$form_state, $form_id) {
     switch ($form_id) {
         case 'country_node_form' :
@@ -49,7 +52,7 @@ function cms_country_form_alter(&$form, &$form_state, $form_id) {
             drupal_set_breadcrumb($breadcrumb);
 
         case 'views_exposed_form':
-            if (arg(0) == 'country') {
+            if ($form['#id'] == "views-exposed-form-view-countries-page") {
                 $form['#tree'] = TRUE;
                 $current_profile = CMSUtils::get_current_profile();
 
@@ -191,17 +194,17 @@ function cms_country_theme($existing, $type, $theme, $path) {
     );
     return array(
         'table__country_template_legal_instrument' => $base + array(
-            'variables' => array(
-                'header' => NULL,
-                'rows' => NULL,
-                'attributes' => array(),
-                'caption' => NULL,
-                'colgroups' => array(),
-                'sticky' => TRUE,
-                'empty' => '',
-                'settings' => array()
+                'variables' => array(
+                    'header' => NULL,
+                    'rows' => NULL,
+                    'attributes' => array(),
+                    'caption' => NULL,
+                    'colgroups' => array(),
+                    'sticky' => TRUE,
+                    'empty' => '',
+                    'settings' => array()
+                )
             )
-        )
     );
 }
 
@@ -387,7 +390,7 @@ class Country extends CMSBase {
      *
      * @param   stdClass   $node
      * @return  array      $ret
-    */
+     */
     public static function node_to_array($node) {
         $ret = array(
             'title' => $node->title,
@@ -417,7 +420,7 @@ class Country extends CMSBase {
      *
      * @param   array      $ret
      * @param   stdClass   $node
-    */
+     */
     public static function get_country_instrument_status(&$ret, $node) {
         $ret['field_country_instrument_status'] = array();
         if (!empty($node->field_country_instrument_status[$node->language])) {
@@ -439,7 +442,7 @@ class Country extends CMSBase {
      *
      * @param   array      $ret
      * @param   stdClass   $node
-    */
+     */
     public static function get_country_anual_contribution(&$ret, $node) {
         $ret['field_country_anual_contribution'] = array();
         if (!empty($node->field_country_anual_contribution[$node->language])) {
@@ -460,7 +463,7 @@ class Country extends CMSBase {
      *
      * @param   array      $ret
      * @param   stdClass   $node
-    */
+     */
     public static function get_country_arrears(&$ret, $node) {
         $ret['field_country_arrears'] = array();
         if (!empty($node->field_country_arrears[$node->language])) {
@@ -481,7 +484,7 @@ class Country extends CMSBase {
      *
      * @param   array      $ret
      * @param   stdClass   $node
-    */
+     */
     public static function get_country_voluntary_contrib(&$ret, $node) {
         $ret['field_country_voluntary_contrib'] = array();
         if (!empty($node->field_country_voluntary_contrib[$node->language])) {
