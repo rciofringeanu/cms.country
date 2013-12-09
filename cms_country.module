@@ -86,9 +86,8 @@ function cms_country_form_alter(&$form, &$form_state, $form_id) {
                         $current_instrument_id = $id;
                     }
                 }
-
                 $field = 'field_country_instrument_target_id';
-                $instrument_selected = (!empty($_GET[$field]) && (in_array($_GET[$field], array_keys($instruments)))) ? $_GET[$field] : (string)$current_instrument_id;
+                $instrument_selected = (isset($_GET[$field]) && (in_array($_GET[$field], array_keys($instruments)))) ? $_GET[$field] : (string)$current_instrument_id;
 
                 $form[$field] = array(
                     '#type' => 'select',
@@ -96,6 +95,7 @@ function cms_country_form_alter(&$form, &$form_state, $form_id) {
                     '#suffix' => '</div>',
                     '#options' => $instruments,
                     '#default_value' => $instrument_selected,
+                    '#value'=> $instrument_selected,
                 );
 
                 $path = drupal_get_path('theme', 'cms_theme');
