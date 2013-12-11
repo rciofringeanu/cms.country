@@ -15,6 +15,7 @@ if (!defined('ROLE_MANAGE_PARTY')) {
 if (!defined('VOC_PARTY_STATUS')) {
     define('VOC_PARTY_STATUS', 'party_status');
 }
+define('FILTER_COUNTRY_INSTRUMENT_FIELD', 'field_country_instrument_target_id');
 
 module_load_include('module', 'cms');
 
@@ -86,16 +87,17 @@ function cms_country_form_alter(&$form, &$form_state, $form_id) {
                         $current_instrument_id = $id;
                     }
                 }
+                $instrument_selected = (isset($_GET[FILTER_COUNTRY_INSTRUMENT_FIELD])
+                    && (in_array($_GET[FILTER_COUNTRY_INSTRUMENT_FIELD], array_keys($instruments))))
+                    ? $_GET[FILTER_COUNTRY_INSTRUMENT_FIELD] : (string)$current_instrument_id;
 
-                $field = 'field_country_instrument_target_id';
-                $instrument_selected = (!empty($_GET[$field]) && (in_array($_GET[$field], array_keys($instruments)))) ? $_GET[$field] : (string)$current_instrument_id;
-
-                $form[$field] = array(
+                $form[FILTER_COUNTRY_INSTRUMENT_FIELD] = array(
                     '#type' => 'select',
                     '#prefix' => '<div id="dropdown-country-instrument">',
                     '#suffix' => '</div>',
                     '#options' => $instruments,
                     '#default_value' => $instrument_selected,
+                    '#value'=> $instrument_selected,
                 );
 
                 $path = drupal_get_path('theme', 'cms_theme');
