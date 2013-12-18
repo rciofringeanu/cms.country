@@ -317,7 +317,7 @@ function cms_country_views_default_views() {
   $handler->display->display_options['style_options']['provide_file'] = 1;
   $handler->display->display_options['style_options']['filename'] = 'Countries - %timestamp-yyyy%timestamp-mm%timestamp-dd.xls';
   $handler->display->display_options['style_options']['parent_sort'] = 1;
-  $handler->display->display_options['path'] = 'country/export';
+  $handler->display->display_options['path'] = 'manage/country/export';
   $translatables['view_countries'] = array(
     t('Master'),
     t('View all countries'),
