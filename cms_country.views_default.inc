@@ -145,10 +145,8 @@ function cms_country_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Search';
   $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Clear filters';
-  $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['pager']['options']['id'] = '0';
   $handler->display->display_options['style_plugin'] = 'datatables';
   $handler->display->display_options['style_options']['columns'] = array(
     'title' => 'title',
@@ -195,11 +193,11 @@ function cms_country_views_default_views() {
       'empty_column' => 0,
     ),
   );
-  $handler->display->display_options['style_options']['empty_table'] = TRUE;
   $handler->display->display_options['style_options']['elements'] = array(
     'search_box' => 1,
     'table_info' => 1,
     'save_state' => 0,
+    'enable_tabletools' => 1,
   );
   $handler->display->display_options['style_options']['layout'] = array(
     'autowidth' => 1,
@@ -210,10 +208,20 @@ function cms_country_views_default_views() {
     'pagination_style' => 'full_numbers',
     'length_change' => 1,
     'display_length' => '10',
-    'processing' => 1,
-    'server_side' => 1,
+    'processing' => 0,
+    'server_side' => 0,
     'items_per_page_options' => '10, 25, 50, All',
   );
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = '<br />
+<div class="alert">
+  <strong>There are no entries matching the selected criteria!</strong>
+</div>';
+  $handler->display->display_options['empty']['area']['format'] = 'full_html';
   /* Relationship: Content: Ratification status (field_country_instrument_status) */
   $handler->display->display_options['relationships']['field_country_instrument_status_value']['id'] = 'field_country_instrument_status_value';
   $handler->display->display_options['relationships']['field_country_instrument_status_value']['table'] = 'field_data_field_country_instrument_status';
@@ -304,20 +312,6 @@ function cms_country_views_default_views() {
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['path'] = 'manage/country/listing';
-
-  /* Display: Data export */
-  $handler = $view->new_display('views_data_export', 'Data export', 'country_export');
-  $handler->display->display_options['defaults']['query'] = FALSE;
-  $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['distinct'] = TRUE;
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
-  $handler->display->display_options['pager']['type'] = 'none';
-  $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'views_data_export_xls';
-  $handler->display->display_options['style_options']['provide_file'] = 1;
-  $handler->display->display_options['style_options']['filename'] = 'Countries - %timestamp-yyyy%timestamp-mm%timestamp-dd.xls';
-  $handler->display->display_options['style_options']['parent_sort'] = 1;
-  $handler->display->display_options['path'] = 'country/export';
   $translatables['view_countries'] = array(
     t('Master'),
     t('View all countries'),
@@ -327,13 +321,10 @@ function cms_country_views_default_views() {
     t('Sort by'),
     t('Asc'),
     t('Desc'),
-    t('Items per page'),
-    t('- All -'),
-    t('Offset'),
-    t('« first'),
-    t('‹ previous'),
-    t('next ›'),
-    t('last »'),
+    t('<br />
+<div class="alert">
+  <strong>There are no entries matching the selected criteria!</strong>
+</div>'),
     t('field collection item from field_country_instrument_status'),
     t('Title'),
     t('Official name'),
@@ -343,7 +334,6 @@ function cms_country_views_default_views() {
     t('CMS Instrument'),
     t('Status'),
     t('Page'),
-    t('Data export'),
   );
   $export['view_countries'] = $view;
 
