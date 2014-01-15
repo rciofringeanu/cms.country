@@ -150,7 +150,7 @@ function cms_country_node_view($node, $view_mode) {
 function cms_country_entity_view($entity, $type, $view_mode, $langcode) {
 
     // Inject the projects into the country profile page
-    if($type == 'node' && $entity->type == Country::$bundle_instrument_module) {
+    if($type == 'node' && $entity->type == Country::$bundle_instrument_module && path_is_admin(current_path())) {
         $entity->content[Country::$field_legal_instrument_countries] =
             _country_get_instruments_render($entity, $view_mode);
     }
