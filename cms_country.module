@@ -233,6 +233,45 @@ function cms_country_theme($existing, $type, $theme, $path) {
     );
 }
 
+function cms_views_pre_render(&$view) {
+    if ($view->name == 'front_end_countries' && $view->current_display == 'party_range_states_page') {
+
+        /**
+         * Add ammap data
+         */
+        $path = drupal_get_path('theme', 'cms_frontend');
+        drupal_add_js("$path/includes/ammap/ammap.js");
+        drupal_add_js("$path/includes/ammap/worldLow.js");
+        drupal_add_js("$path/js/states_map.js");
+        drupal_add_js(array('cms_country' => array('ammapPath' => $path . '/includes/ammap')), 'setting');
+
+        $status_types = array();
+        $countries = array();
+        foreach ($view->result as $row) {
+            if (empty($row->field_field_country_status)){
+                continue;
+            }
+            $type = $row->field_field_country_status[0]['rendered']['#markup'];
+            if (!in_array($type, $status_types)) {
+                $status_types []= $type;
+            }
+            $country['nid'] = $row->nid;
+            $country['title'] = $row->node_title;
+            $country['type'] = $type;
+            $country['iso2'] = strtoupper($row->field_field_country_iso2[0]['raw']['value']);
+            $year = "";
+            if (isset($row->field_field_country_ratification_date[0])) {
+                $year = date( 'Y', strtotime($row->field_field_country_ratification_date[0]['raw']['value']));
+            }
+            $country['year'] = $year;
+            $country['url'] = drupal_lookup_path('alias',"node/" . $row->nid);
+            $countries []= $country;
+        }
+
+        drupal_add_js(array('cms_country' => array('status_types' => $status_types )), 'setting');
+        drupal_add_js(array('cms_country' => array('ammapData' => $countries )), 'setting');
+    }
+}
 
 /**
  * Implements hook_node_load()

@@ -11,6 +11,251 @@ function cms_country_views_default_views() {
   $export = array();
 
   $view = new view();
+  $view->name = 'front_end_countries';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Front-end Countries';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Party and Range States';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
+  $handler->display->display_options['query']['options']['pure_distinct'] = TRUE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['style_plugin'] = 'datatables';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'field_country_ratification_date' => 'field_country_ratification_date',
+    'field_country_status' => 'field_country_status',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_country_ratification_date' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_country_status' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['elements'] = array(
+    'search_box' => 1,
+    'table_info' => 1,
+    'save_state' => 0,
+    'enable_tabletools' => 0,
+  );
+  $handler->display->display_options['style_options']['layout'] = array(
+    'autowidth' => 0,
+    'themeroller' => 0,
+    'sdom' => '',
+  );
+  $handler->display->display_options['style_options']['pages'] = array(
+    'pagination_style' => '0',
+    'length_change' => 1,
+    'display_length' => '10',
+    'processing' => 0,
+    'server_side' => 0,
+    'items_per_page_options' => '10, 25, 50, All',
+  );
+  /* Relationship: Content: Ratification status (field_country_instrument_status) */
+  $handler->display->display_options['relationships']['field_country_instrument_status_value']['id'] = 'field_country_instrument_status_value';
+  $handler->display->display_options['relationships']['field_country_instrument_status_value']['table'] = 'field_data_field_country_instrument_status';
+  $handler->display->display_options['relationships']['field_country_instrument_status_value']['field'] = 'field_country_instrument_status_value';
+  $handler->display->display_options['relationships']['field_country_instrument_status_value']['delta'] = '-1';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Field collection item: Status */
+  $handler->display->display_options['fields']['field_country_status']['id'] = 'field_country_status';
+  $handler->display->display_options['fields']['field_country_status']['table'] = 'field_data_field_country_status';
+  $handler->display->display_options['fields']['field_country_status']['field'] = 'field_country_status';
+  $handler->display->display_options['fields']['field_country_status']['relationship'] = 'field_country_instrument_status_value';
+  $handler->display->display_options['fields']['field_country_status']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_country_status']['type'] = 'i18n_taxonomy_term_reference_plain';
+  /* Field: Field collection item: Status date */
+  $handler->display->display_options['fields']['field_country_ratification_date']['id'] = 'field_country_ratification_date';
+  $handler->display->display_options['fields']['field_country_ratification_date']['table'] = 'field_data_field_country_ratification_date';
+  $handler->display->display_options['fields']['field_country_ratification_date']['field'] = 'field_country_ratification_date';
+  $handler->display->display_options['fields']['field_country_ratification_date']['relationship'] = 'field_country_instrument_status_value';
+  $handler->display->display_options['fields']['field_country_ratification_date']['settings'] = array(
+    'format_type' => 'year_date_type',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  /* Field: Content: ISO 3166-2 code */
+  $handler->display->display_options['fields']['field_country_iso2']['id'] = 'field_country_iso2';
+  $handler->display->display_options['fields']['field_country_iso2']['table'] = 'field_data_field_country_iso2';
+  $handler->display->display_options['fields']['field_country_iso2']['field'] = 'field_country_iso2';
+  $handler->display->display_options['fields']['field_country_iso2']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_country_iso2']['type'] = 'text_plain';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'country' => 'country',
+  );
+  /* Filter criterion: Field collection item: CMS Instrument (field_country_instrument) */
+  $handler->display->display_options['filters']['field_country_instrument_target_id']['id'] = 'field_country_instrument_target_id';
+  $handler->display->display_options['filters']['field_country_instrument_target_id']['table'] = 'field_data_field_country_instrument';
+  $handler->display->display_options['filters']['field_country_instrument_target_id']['field'] = 'field_country_instrument_target_id';
+  $handler->display->display_options['filters']['field_country_instrument_target_id']['relationship'] = 'field_country_instrument_status_value';
+  $handler->display->display_options['filters']['field_country_instrument_target_id']['value']['value'] = '1';
+
+  /* Display: Parties and Range States */
+  $handler = $view->new_display('page', 'Parties and Range States', 'party_range_states_page');
+  $handler->display->display_options['path'] = 'party-range-states';
+
+  /* Display: List */
+  $handler = $view->new_display('page', 'List', 'party_range_states_list');
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'datatables';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'field_country_status',
+      'rendered' => 1,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'field_country_status' => 'field_country_status',
+    'field_country_ratification_date' => 'field_country_ratification_date',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_country_status' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_country_ratification_date' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['elements'] = array(
+    'search_box' => 1,
+    'table_info' => 1,
+    'save_state' => 0,
+    'enable_tabletools' => 0,
+  );
+  $handler->display->display_options['style_options']['layout'] = array(
+    'autowidth' => 0,
+    'themeroller' => 0,
+    'sdom' => '',
+  );
+  $handler->display->display_options['style_options']['pages'] = array(
+    'pagination_style' => '0',
+    'length_change' => 1,
+    'display_length' => '10',
+    'processing' => 0,
+    'server_side' => 0,
+    'items_per_page_options' => '10, 25, 50, All',
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Field collection item: Status */
+  $handler->display->display_options['fields']['field_country_status']['id'] = 'field_country_status';
+  $handler->display->display_options['fields']['field_country_status']['table'] = 'field_data_field_country_status';
+  $handler->display->display_options['fields']['field_country_status']['field'] = 'field_country_status';
+  $handler->display->display_options['fields']['field_country_status']['relationship'] = 'field_country_instrument_status_value';
+  $handler->display->display_options['fields']['field_country_status']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_country_status']['type'] = 'i18n_taxonomy_term_reference_plain';
+  /* Field: Field collection item: Status date */
+  $handler->display->display_options['fields']['field_country_ratification_date']['id'] = 'field_country_ratification_date';
+  $handler->display->display_options['fields']['field_country_ratification_date']['table'] = 'field_data_field_country_ratification_date';
+  $handler->display->display_options['fields']['field_country_ratification_date']['field'] = 'field_country_ratification_date';
+  $handler->display->display_options['fields']['field_country_ratification_date']['relationship'] = 'field_country_instrument_status_value';
+  $handler->display->display_options['fields']['field_country_ratification_date']['settings'] = array(
+    'format_type' => 'year_date_type',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+  );
+  $handler->display->display_options['path'] = 'parties_range_states_list';
+  $translatables['front_end_countries'] = array(
+    t('Master'),
+    t('Party and Range States'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('field collection item from field_country_instrument_status'),
+    t('Status'),
+    t('Status date'),
+    t('ISO 3166-2 code'),
+    t('Parties and Range States'),
+    t('List'),
+  );
+  $export['front_end_countries'] = $view;
+
+  $view = new view();
   $view->name = 'related_national_reports_country';
   $view->description = '';
   $view->tag = 'default';
