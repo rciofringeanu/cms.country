@@ -267,7 +267,7 @@ function cms_views_pre_render(&$view) {
             $country['url'] = drupal_lookup_path('alias',"node/" . $row->nid);
             $countries []= $country;
         }
-
+        asort($status_types);
         drupal_add_js(array('cms_country' => array('status_types' => $status_types )), 'setting');
         drupal_add_js(array('cms_country' => array('ammapData' => $countries )), 'setting');
     }
