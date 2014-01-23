@@ -204,7 +204,7 @@ function cms_country_views_default_views() {
     'display_length' => '10',
     'processing' => 0,
     'server_side' => 0,
-    'items_per_page_options' => '10, 25, 50, All',
+    'items_per_page_options' => '10, 25, 50, 100',
   );
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
