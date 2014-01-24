@@ -243,7 +243,7 @@ function cms_views_pre_render(&$view) {
         drupal_add_js("$path/includes/ammap/ammap.js");
         drupal_add_js("$path/includes/ammap/worldLow.js");
         drupal_add_js("$path/js/states_map.js");
-        drupal_add_js(array('cms_country' => array('ammapPath' => $path . '/includes/ammap')), 'setting');
+        drupal_add_js(array('cms_country' => array('ammapPath' => '/' . $path . '/includes/ammap')), 'setting');
 
         $status_types = array();
         $countries = array();
