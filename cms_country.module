@@ -629,6 +629,27 @@ class Country extends CMSBase {
         return $ret;
     }
 
+    /**
+     * Retrieve cached country name from the Drupal persistent cache
+     * @return array Associative array with iso2l => Country name
+     */
+    static function get_country_names_cached() {
+        $cache_name = 'cms_country_iso2l_name';
+        $cache = cache_get($cache_name);
+        if(!$cache) {
+            $cache = array();
+            $countries = self::get_all_objects();
+            foreach($countries as $country) {
+                $iso2 = self::get_field_single_value($country, 'field_country_iso2');
+                $cache[strtolower($iso2)] = $country->title;
+            }
+            cache_set($cache_name, $cache, 'cache', time() + 3600);
+        } else {
+            $cache = $cache->data;
+        }
+        return $cache;
+    }
+
 
     /**
      * Retrieve the list of countries having array keys the country names in all variants (normal, uppercase, lowercase)
