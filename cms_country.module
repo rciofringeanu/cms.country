@@ -641,7 +641,7 @@ class Country extends CMSBase {
             $countries = self::get_all_objects();
             foreach($countries as $country) {
                 $iso2 = self::get_field_single_value($country, 'field_country_iso2');
-                $cache[strtolower($iso2)] = $country->title;
+                $cache[strtoupper($iso2)] = $country->title;
             }
             cache_set($cache_name, $cache, 'cache', time() + 3600);
         } else {
