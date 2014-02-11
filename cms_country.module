@@ -299,7 +299,7 @@ function cms_views_pre_render(&$view) {
                         $year = date( 'Y', strtotime($row->field_field_country_ratification_date[0]['raw']['value']));
                     }
                     $country['year'] = $year;
-                    $country['url'] = drupal_lookup_path('alias',"node/" . $row->nid);
+                    $country['url'] = '/' . drupal_lookup_path('alias',"node/" . $row->nid);
                     $countries []= $country;
                 }
                 asort($status_types);
