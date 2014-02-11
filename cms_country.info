@@ -4,6 +4,7 @@ core = 7.x
 package = CMS
 version = 7.x-2.11
 project = cms_country
+project status url = http://fserver.eaudeweb.ro/fserver
 dependencies[] = ctools
 dependencies[] = datatables
 dependencies[] = date
