@@ -126,7 +126,8 @@ function _country_redirect_after_delete(&$form, &$form_state) {
 /**
  * Implement hook_node_view()
  */
-function cms_country_node_view($node, $view_mode) {
+function cms_country_node_view($node, $view_mode, $langcode) {
+
     if(function_exists('cms_theme_node_access') && $node->type == Country::$bundle) {
         cms_theme_node_access($node);
     }
@@ -137,7 +138,41 @@ function cms_country_node_view($node, $view_mode) {
             $breadcrumb[] = l(t('Home'), '<front>');
             $breadcrumb[] = l(t('Countries'), ADMINISTRATION_PATH . 'country/listing');
             drupal_set_breadcrumb($breadcrumb);
+
+            //Set the counters for related content
+            $view_species = views_get_view('species_admin');
+            $view_species->set_display('country_species');
+            $view_species->set_arguments(array($node->nid));
+            $view_species->execute();
+            $node->species_count = $view_species->total_rows;
+
+            $view_projects = views_get_view('project_admin');
+            $view_projects->set_display('country_projects');
+            $view_projects->set_arguments(array($node->nid));
+            $view_projects->execute();
+            $node->projects_count = $view_projects->total_rows;
+
+            $submmiter = taxonomy_get_term_by_name($node->title, VOC_DOCUMENT_SUBMITTER);
+            $country_term_id = key($submmiter);
+            $view_national_reports = views_get_view('documents');
+            $view_national_reports->set_display('country_national_reports');
+            $view_national_reports->set_arguments(array($country_term_id));
+            $view_national_reports->execute();
+            $node->national_reports_count = $view_national_reports->total_rows;
+
+            if ($GLOBALS['theme'] == 'cms_frontend') {
+                $point['country'] = $node->title;
+
+                drupal_add_js(array('gmap' => array('marker' => $point )), 'setting');
+                //Map
+                drupal_add_js('https://maps.googleapis.com/maps/api/js?&sensor=true');
+                $path = drupal_get_path('theme', 'cms_frontend');
+                drupal_add_js("$path/js/gmaps.js");
+            }
+
+
         }
+
     }
 
     return $node;
@@ -148,7 +183,6 @@ function cms_country_node_view($node, $view_mode) {
  * Implements hook_entity_view()
  */
 function cms_country_entity_view($entity, $type, $view_mode, $langcode) {
-
     // Inject the projects into the country profile page
     if($type == 'node' && $entity->type == Country::$bundle_instrument_module && path_is_admin(current_path())) {
         $entity->content[Country::$field_legal_instrument_countries] =
@@ -234,43 +268,49 @@ function cms_country_theme($existing, $type, $theme, $path) {
 }
 
 function cms_views_pre_render(&$view) {
-    if ($view->name == 'front_end_countries' && $view->current_display == 'party_range_states_page') {
+    switch ($view->name) {
+        case 'front_end_countries':
+            if ($view->current_display == 'party_range_states_page') {
+                /**
+                 * Add ammap data
+                 */
+                $path = drupal_get_path('theme', 'cms_frontend');
+                drupal_add_js("$path/includes/ammap/ammap.js");
+                drupal_add_js("$path/includes/ammap/worldLow.js");
+                drupal_add_js("$path/js/states_map.js");
+                drupal_add_js(array('cms_country' => array('ammapPath' => '/' . $path . '/includes/ammap')), 'setting');
 
-        /**
-         * Add ammap data
-         */
-        $path = drupal_get_path('theme', 'cms_frontend');
-        drupal_add_js("$path/includes/ammap/ammap.js");
-        drupal_add_js("$path/includes/ammap/worldLow.js");
-        drupal_add_js("$path/js/states_map.js");
-        drupal_add_js(array('cms_country' => array('ammapPath' => $path . '/includes/ammap')), 'setting');
-
-        $status_types = array();
-        $countries = array();
-        foreach ($view->result as $row) {
-            if (empty($row->field_field_country_status)){
-                continue;
+                $status_types = array();
+                $countries = array();
+                foreach ($view->result as $row) {
+                    if (empty($row->field_field_country_status)){
+                        continue;
+                    }
+                    $type = $row->field_field_country_status[0]['rendered']['#markup'];
+                    if (!in_array($type, $status_types)) {
+                        $status_types []= $type;
+                    }
+                    $country['nid'] = $row->nid;
+                    $country['title'] = $row->node_title;
+                    $country['type'] = $type;
+                    $country['iso2'] = strtoupper($row->field_field_country_iso2[0]['raw']['value']);
+                    $year = "";
+                    if (isset($row->field_field_country_ratification_date[0])) {
+                        $year = date( 'Y', strtotime($row->field_field_country_ratification_date[0]['raw']['value']));
+                    }
+                    $country['year'] = $year;
+                    $country['url'] = '/' . drupal_lookup_path('alias',"node/" . $row->nid);
+                    $countries []= $country;
+                }
+                asort($status_types);
+                drupal_add_js(array('cms_country' => array('status_types' => $status_types )), 'setting');
+                drupal_add_js(array('cms_country' => array('ammapData' => $countries )), 'setting');
             }
-            $type = $row->field_field_country_status[0]['rendered']['#markup'];
-            if (!in_array($type, $status_types)) {
-                $status_types []= $type;
-            }
-            $country['nid'] = $row->nid;
-            $country['title'] = $row->node_title;
-            $country['type'] = $type;
-            $country['iso2'] = strtoupper($row->field_field_country_iso2[0]['raw']['value']);
-            $year = "";
-            if (isset($row->field_field_country_ratification_date[0])) {
-                $year = date( 'Y', strtotime($row->field_field_country_ratification_date[0]['raw']['value']));
-            }
-            $country['year'] = $year;
-            $country['url'] = drupal_lookup_path('alias',"node/" . $row->nid);
-            $countries []= $country;
-        }
-
-        drupal_add_js(array('cms_country' => array('status_types' => $status_types )), 'setting');
-        drupal_add_js(array('cms_country' => array('ammapData' => $countries )), 'setting');
+            break;
+        default:
+            break;
     }
+
 }
 
 /**
